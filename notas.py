@@ -26,6 +26,6 @@ def mostrar_resumen(notas):
 
 def main():
     notas = pedir_notas()
-    mostrar_resumen(notas)
+
 
 main()
