@@ -15,6 +15,8 @@ class Evento:
         self.entradas_vendidas= []
 
     def __str__(self):
-        return f"Evento: {self.nombre} | Fecha: {self.fecha} | Lugar: {self.sede.nombre}"
+        return f"Evento: {self.nombre_evento} | Fecha: {self.fecha} | Lugar: {self.sede.nombre}"
+
+
 
 
