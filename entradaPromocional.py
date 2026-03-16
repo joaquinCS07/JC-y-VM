@@ -1,5 +1,5 @@
-from EntradaGeneral import EntradaGeneral
-from Promocion import Promocion
+from entradaGeneral import EntradaGeneral
+from promocion import Promocion
 
 class EntradaPromocional(EntradaGeneral, Promocion):
     def __init__(self, id_entrada, precio_base, nombre_promo, descuento):

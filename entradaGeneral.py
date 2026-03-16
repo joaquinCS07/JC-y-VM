@@ -1,4 +1,4 @@
-from Entrada import Entrada
+from entrada import Entrada
 
 class EntradaGeneral(Entrada):
     def __init__(self, id_entrada, precio_base):

@@ -1,4 +1,4 @@
-from Persona import Persona
+from persona import Persona
 
 class Artista(Persona):
     def __init__(self, nombre, dni, genero):
