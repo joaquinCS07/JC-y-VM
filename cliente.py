@@ -15,9 +15,9 @@ class Cliente(Persona):
         return f'{info_persona}, Teléfono: {self._telefono}, Compras: {len(self._historial_compras)}'
 
 
-@property
-def telefono(self):
-    return self._telefono
+    @property
+    def telefono(self):
+        return self._telefono
 
 @property
 def historial_compras(self):
