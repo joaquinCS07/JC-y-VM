@@ -6,4 +6,4 @@ class EntradaVIP(Entrada):
         self.zona_exclusiva = zona_exclusiva
 
     def calcular_precio_final(self):
-        return self.precio_base + 50
+        return self._precio_base + 50
