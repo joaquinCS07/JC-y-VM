@@ -2,9 +2,10 @@ from persona import Persona
 from agenda import Agenda
 
 class Artista(Persona):
-    def __init__(self, nombre, dni, genero):
+    def __init__(self, nombre, dni, correo, genero):
         super().__init__(nombre, dni)
         self.genero= genero
+        self._correo = correo
         self.agenda= Agenda()
 
     def agregar_a_agenda(self, evento):  #Añade un evento al objeto agenda
