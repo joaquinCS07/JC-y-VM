@@ -3,7 +3,7 @@ from agenda import Agenda
 
 class Artista(Persona):
     def __init__(self, nombre, dni, correo, genero):
-        super().__init__(nombre, dni)
+        super().__init__(nombre, dni, correo)
         self.genero= genero
         self._correo = correo
         self.agenda= Agenda()
