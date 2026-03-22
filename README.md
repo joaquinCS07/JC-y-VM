@@ -47,3 +47,29 @@ el comportamiento obligatorio de sus clases hijas.
 3. entrada.py, entradaVip.py, entradaGeneral.py, entradaPromocional.py: Lógica de precios y tipos de acceso.
 
 4. promocion.py: Mixin para aplicar descuentos a entradas promocionales.
+
+## Arquitectura y Responsabilidades:
+
+El proyecto sigue una estructura modular con dependencias dirigidas para asegurar la mantenibilidad:
+
+**Dominio (`persona.py`, `entrada.py`, `sede.py`, etc.)**: Contiene las entidades, sus estados e invariantes de negocio (ej. validación de aforo o cálculo de precios).
+**Lógica de Orquestación (`evento.py`)**: Coordina la relación entre sedes, entradas y ventas.
+**Mixins (`promocion.py`)**: Proporciona comportamientos específicos reutilizables de forma transversal.
+
+## Ejemplo rápido de uso: 
+
+from sede import Sede
+from evento import Evento
+from entradaVip import EntradaVIP
+
+# 1. Definir infraestructura
+sede_madrid = Sede("WiZink Center", "Av. Felipe II", 15000)
+
+# 2. Crear evento
+concierto = Evento("Concierto Rock", "2026-05-20", sede_madrid)
+
+# 3. Venta polimórfica (El evento no necesita saber que es VIP para calcular el total)
+vip = EntradaVIP(id_entrada="V-001", precio_base=80, zona_exclusiva="Front Stage")
+concierto.agregar_venta(vip)
+
+print(f"Total recaudado: {concierto.calcular_ingresos_totales()}€")
