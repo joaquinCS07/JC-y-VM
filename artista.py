@@ -5,8 +5,7 @@ class Artista(Persona):
     def __init__(self, nombre, dni, correo, genero):
         super().__init__(nombre, dni, correo)
         self.genero= genero
-        self._correo = correo
-        self.agenda= Agenda()
+        self._agenda= Agenda()
 
     def agregar_a_agenda(self, evento):  #Añade un evento al objeto agenda
         self._agenda.agregar_evento(evento)
@@ -18,4 +17,4 @@ class Artista(Persona):
         return self._agenda.mostrar_eventos()
 
     def __str__(self):
-        return f'Arista: {self.nombre}, Dni: {self.dni}, Genero: {self.genero}'
+        return f'Arista: {self._nombre}, Dni: {self._dni}, Genero: {self.genero}'
