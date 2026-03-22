@@ -12,7 +12,7 @@ class EntradaPromocional(EntradaGeneral, Promocion):
 
     def __str__(self):
         estado = "Vendida" if self._vendida else "Disponible"
-        return f"Entrada Promocional #{self.id_entrada} | Promo: {self.nombre_promo} | Precio Final: {self.calcular_precio_final()}€ | {estado}"
+        return f"Entrada Promocional #{self._id_entrada} | Promo: {self.nombre_promo} | Precio Final: {self.calcular_precio_final()}€ | {estado}"
 
     def __repr__(self):
         return f"EntradaPromocional({self.id_entrada}, {self._precio_base}, '{self.nombre_promo}', {self.descuento})"
