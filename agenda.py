@@ -1,3 +1,4 @@
+from excepciones import EventoDuplicadoError
 
 class Agenda:
 
@@ -5,18 +6,15 @@ class Agenda:
         self._eventos = []
 
     def agregar_evento(self, evento):
-        if evento not in self._eventos:
-            self._eventos.append(evento)
-            print("Evento añadido a la agenda con éxito.")
-        else:
-            print("Error: El evento ya está en la agenda.")
+        if evento in self._eventos:
+            raise EventoDuplicadoError("El evento ya está en la agenda")
+        self._eventos.append(evento)
+
 
     def cancelar_evento(self, evento):
-        if evento in self._eventos:
-            self._eventos.remove(evento)
-            print("Evento cancelado y eliminado de la agenda.")
-        else:
-            print("Error: El evento no existe en esta agenda.")
+        if evento not in self._eventos:
+            raise ValueError("El evento no existe en la agenda")
+        self._eventos.remove(evento)
 
     def mostrar_eventos(self):
         if not self._eventos:
