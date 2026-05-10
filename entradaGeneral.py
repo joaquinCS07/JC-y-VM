@@ -5,5 +5,5 @@ class EntradaGeneral(Entrada):
         super().__init__(id_entrada, precio_base)
         self._puerta_acceso = "Puerta Principal"
 
-    def calcular_precio_final(self):
-        return self._precio_base
+    def calcular_precio(self) -> float:
+        return self.precio_base

@@ -8,5 +8,7 @@ class Evento:
     def calcular_ingresos_totales(self):
         total = 0
         for entrada in self.entradas_vendidas:
-            total += entrada.calcular_precio_final()
+            total += entrada.calcular_precio()
         return total
+
+

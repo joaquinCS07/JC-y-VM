@@ -1,13 +1,13 @@
 from abc import ABC, abstractmethod
 
 class Entrada(ABC):
-    def __init__(self, id_entrada, precio_base):
+    def __init__(self, id_entrada: int, precio_base: float):
         self._id_entrada = id_entrada
-        self._precio_base = precio_base
+        self.precio_base = precio_base
         self._vendida = False
 
     @abstractmethod
-    def calcular_precio_final(self):
+    def calcular_precio(self) -> float:
         pass
 
     def marcar_como_vendida(self):

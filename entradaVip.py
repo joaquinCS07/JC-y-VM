@@ -5,5 +5,5 @@ class EntradaVIP(Entrada):
         self.puerta_acceso = "Puerta Prioritaria"
         self.zona_exclusiva = zona_exclusiva
 
-    def calcular_precio_final(self):
-        return self._precio_base + 50
+    def calcular_precio(self) -> float:
+        return self.precio_base * 1.5
