@@ -1,3 +1,5 @@
+from excepciones import AforoCompletoError, EntradaDuplicadaError
+
 class Evento:
     def __init__(self, nombre_evento, fecha, sede):
         self._nombre_evento = nombre_evento
@@ -12,10 +14,19 @@ class Evento:
         return total
 
     def agregar_venta(self, entrada): 
+        
         self._entradas_vendidas.append(entrada)
-        entrada.marcar_como_vendida() 
+        entrada.marcar_como_vendida()
 
-
+# -- Manejo de Errores: -- 
+# Control de aforo: 
+        if len(self._entradas_vendidas) >= self._sede.aforo_maximo:
+            raise AforoCompletoError()
+# Control Ids duplicados: 
+        for e in self._entradas_vendidas:
+            if e.id_entrada == entrada.id_entrada:
+                raise EntradaDuplicadaError()
+        
     def __str__(self):
         return f"{self._nombre_evento} - {self._fecha} - {self._sede.nombre}"
      
