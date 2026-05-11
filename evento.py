@@ -1,7 +1,10 @@
-from excepciones import AforoCompletoError, EntradaDuplicadaError
+from excepciones import AforoCompletoError, EntradaDuplicadaError, EventoInvalidoError
 
 class Evento:
     def __init__(self, nombre_evento, fecha, sede):
+        if not nombre_evento.strip():
+            raise EventoInvalidoError()
+
         self._nombre_evento = nombre_evento
         self._fecha = fecha
         self._sede = sede
