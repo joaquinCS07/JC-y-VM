@@ -1,70 +1,184 @@
 
-# Importamos los módulos
 from sede import Sede
 from evento import Evento
-from artista import Artista
-from cliente import Cliente
-from entradaGeneral import EntradaGeneral
 from entradaVip import EntradaVIP
+from entradaGeneral import EntradaGeneral
 from entradaPromocional import EntradaPromocional
-from persona import Persona
+from persistencia import guardar_datos, cargar_datos
+
+# Lista principal de eventos
+eventos = []
 
 
-def main():
-    print("--- SISTEMA DE GESTIÓN DE EVENTOS MUSICALES ---\n")
+# =========================
+# FUNCIONES DEL MENÚ
+# =========================
 
-    # 1. Creación de una Sede y un Evento
-    print("[1] Creando la sede y el evento...")
-    wizink = Sede("WiZink Center", "Av. Felipe II, Madrid", 15000)
-    concierto_reggaeton = Evento("Reggaeton Beach Festival", "2026-05-20", wizink)
-    print(f"-> Evento creado: {concierto_reggaeton._nombre_evento} en {wizink._nombre}\n")
+def crear_evento():
+    print("\n===== CREAR EVENTO =====")
 
-    # 2. Creación de un Artista y uso de su Agenda
-    print("[2] Registrando artista y añadiendo evento a su agenda...")
-    cantante = Artista("Bad Bunny", "12345678A", "badbunny@gmail.es", "Reggaeton")
-    cantante.agregar_a_agenda(concierto_reggaeton)
-    print(cantante)
-    print("Agenda del artista:")
-    print(cantante.ver_agenda())
-    print()
+    nombre = input("Nombre del evento: ")
+    fecha = input("Fecha (YYYY-MM-DD): ")
 
-    # 3. Creación de un Cliente
-    print("[3] Registrando un nuevo cliente...")
-    cliente_fan = Cliente("Pablo gonzalez", "87654321B", "pablogon@gmail.com", "600123456")
-    print(cliente_fan.mostrar_info())
-    print()
+    nombre_sede = input("Nombre de la sede: ")
+    direccion = input("Dirección: ")
+    aforo = int(input("Aforo máximo: "))
 
-    # 4. Creación de diferentes tipos de Entradas
-    print("[4] Generando entradas para el evento...")
-    entrada1 = EntradaGeneral(1001, 40.0)
-    entrada2 = EntradaVIP(1002, 40.0, "Front Stage")
-    entrada3 = EntradaPromocional(1003, 40.0, "Black Friday", 15.0)
+    sede = Sede(nombre_sede, direccion, aforo)
+    evento = Evento(nombre, fecha, sede)
 
-    # Lista de entradas
-    entradas_disponibles = [entrada1, entrada2, entrada3]
+    eventos.append(evento)
 
-    for entrada in entradas_disponibles:
-        precio = entrada.calcular_precio_final()
-        tipo = type(entrada).__name__
-        print(f"-> {tipo} calculada: {precio}€")
-    print()
+    print("✅ Evento creado correctamente")
 
-    # 5. Simulando una compra
-    print("[5] Simulando la compra de la entrada promocional por parte del cliente...")
-    entrada3.marcar_como_vendida()
-    cliente_fan.nueva_compra(entrada3)
 
-    print("\nEstado de la entrada tras la compra:")
-    print(entrada3)
 
-    print("\nInformación actualizada del cliente:")
-    print(cliente_fan.mostrar_info())
-    print()
+def mostrar_eventos():
+    print("\n===== LISTA DE EVENTOS =====")
 
-    # 6. Estadísticas finales
-    print("[6] Estadísticas del sistema...")
-    print(f"-> Total de personas registradas en el sistema (Artistas + Clientes): {Persona.total_registrados()}")
+    if not eventos:
+        print("No hay eventos registrados")
+        return
 
+    for i, evento in enumerate(eventos, start=1):
+        print(f"{i}. {evento}")
+
+
+
+def vender_entrada():
+    print("\n===== VENDER ENTRADA =====")
+
+    if not eventos:
+        print("No hay eventos disponibles")
+        return
+
+    mostrar_eventos()
+
+    indice = int(input("Seleccione el número del evento: ")) - 1
+
+    if indice < 0 or indice >= len(eventos):
+        print("❌ Evento inválido")
+        return
+
+    evento = eventos[indice]
+
+    print("\nTipos de entrada:")
+    print("1. VIP")
+    print("2. General")
+    print("3. Promocional")
+
+    tipo = input("Seleccione el tipo: ")
+
+    id_entrada = int(input("ID de la entrada: "))
+    precio = float(input("Precio base: "))
+
+    try:
+        if tipo == "1":
+            zona = input("Zona exclusiva: ")
+            entrada = EntradaVIP(id_entrada, precio, zona)
+
+        elif tipo == "2":
+            entrada = EntradaGeneral(id_entrada, precio)
+
+        elif tipo == "3":
+            descuento = float(input("Descuento (%): "))
+            entrada = EntradaPromocional(id_entrada, precio, descuento)
+
+        else:
+            print("❌ Tipo inválido")
+            return
+
+        evento.agregar_venta(entrada)
+        print("✅ Entrada vendida correctamente")
+
+    except Exception as e:
+        print(f"❌ Error: {e}")
+
+
+
+def mostrar_ingresos():
+    print("\n===== INGRESOS POR EVENTO =====")
+
+    if not eventos:
+        print("No hay eventos registrados")
+        return
+
+    for evento in eventos:
+        print(f"{evento.nombre}: {evento.calcular_ingresos_totales()} €")
+
+
+
+def guardar():
+    guardar_datos(eventos)
+    print("✅ Datos guardados correctamente")
+
+
+
+def cargar():
+    global eventos
+    eventos = cargar_datos()
+    print("✅ Datos cargados correctamente")
+
+
+# =========================
+# MENÚ PRINCIPAL
+# =========================
+
+def menu():
+
+    while True:
+
+        print("\n===============================")
+        print(" SISTEMA DE GESTIÓN DE EVENTOS")
+        print("===============================")
+        print("1. Crear evento")
+        print("2. Mostrar eventos")
+        print("3. Vender entrada")
+        print("4. Mostrar ingresos")
+        print("5. Guardar datos")
+        print("6. Cargar datos")
+        print("7. Salir")
+
+        opcion = input("Seleccione una opción: ")
+
+        try:
+            if opcion == "1":
+                crear_evento()
+
+            elif opcion == "2":
+                mostrar_eventos()
+
+            elif opcion == "3":
+                vender_entrada()
+
+            elif opcion == "4":
+                mostrar_ingresos()
+
+            elif opcion == "5":
+                guardar()
+
+            elif opcion == "6":
+                cargar()
+
+            elif opcion == "7":
+                print("👋 Saliendo del sistema...")
+                break
+
+            else:
+                print("❌ Opción inválida")
+
+        except ValueError:
+            print("❌ Error: introduzca un valor válido")
+
+        except Exception as e:
+            print(f"❌ Error inesperado: {e}")
+
+
+# =========================
+# EJECUCIÓN PRINCIPAL
+# =========================
 
 if __name__ == "__main__":
-    main()
+    menu()
+
+
