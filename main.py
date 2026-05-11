@@ -82,7 +82,7 @@ def vender_entrada():
 
         elif tipo == "3":
             descuento = float(input("Descuento (%): "))
-            entrada = EntradaPromocional(id_entrada, precio, descuento)
+            entrada = EntradaPromocional(id_entrada, precio, descuento4)
 
         else:
             print("❌ Tipo inválido")

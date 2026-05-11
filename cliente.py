@@ -19,6 +19,6 @@ class Cliente(Persona):
     def telefono(self):
         return self._telefono
 
-@property
-def historial_compras(self):
-    return self._historial_compras
+    @property
+    def historial_compras(self):
+        return self._historial_compras
